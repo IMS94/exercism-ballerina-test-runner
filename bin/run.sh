@@ -65,7 +65,10 @@ if test -f "$test_output_file"; then
     else
         echo "${slug}: test failed; formatting results"
         cd "$work_dir/bin/test-report-to-exercism-result" || exit
-        bal run -- -CreportFile="$test_output_file" -CtransformedFile="$results_file"
+        echo "reportFile = \"$test_output_file\"" > Config.toml
+        echo "transformedFile = \"$results_file\"" >> Config.toml
+        echo "$(cat Config.toml)"
+        java -jar test_report_to_exercism_result.jar
     fi
 else
     echo "${slug}: test failed; exporting output"
